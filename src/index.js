@@ -1,5 +1,6 @@
 'use strict';
 
+var Promise = require('promise');
 var readonly = require('read-only-stream');
 var through2 = require('through2');
 
@@ -17,8 +18,12 @@ module.exports = function(){
 	app.stream = function(target){
 		var stream = through2.obj();
 
-		bash(stream, target);
-		ssh(stream, target);
+		Promise.all([
+			bash(stream, target),
+			ssh(stream, target)
+		]).then(function(){
+			stream.end();
+		});
 
 		return readonly(stream);
 	};
