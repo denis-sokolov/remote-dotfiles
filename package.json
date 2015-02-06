@@ -1,0 +1,35 @@
+{
+  "name": "remote-dotfiles",
+  "version": "0.0.0",
+  "description": "",
+  "main": "src/index.js",
+  "directories": {
+    "test": "test"
+  },
+  "dependencies": {
+    "concat-stream": "^1.4.7",
+    "glob": "^4.3.5",
+    "gulp-concat": "^2.4.3",
+    "is": "^2.2.1",
+    "promise": "^6.1.0",
+    "read-only-stream": "^1.1.1",
+    "through2": "^0.6.3",
+    "vinyl": "^0.4.6",
+    "vinyl-fs": "^0.3.13"
+  },
+  "devDependencies": {
+    "eslint": "^0.13.0",
+    "jshint": "^2.6.0",
+    "tap-colorize": "^1.2.0",
+    "tape": "^3.5.0",
+    "watch": "^0.13.0"
+  },
+  "scripts": {
+    "lint": "jshint src test && eslint src test",
+    "test": "tape test/*.js | tap-colorize",
+    "watch-tests": "watch 'npm test'",
+    "prepublish": "npm run lint && npm test"
+  },
+  "author": "",
+  "license": "ISC"
+}

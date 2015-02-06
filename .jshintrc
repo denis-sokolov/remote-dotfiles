@@ -1,0 +1,17 @@
+{
+  "node": true,
+  "predef": ["-Promise"],
+
+  "bitwise": true,
+  "eqeqeq": true,
+  "forin": true,
+  "latedef": true,
+  "noarg": true,
+  "noempty": true,
+  "nonew": true,
+  "quotmark": "single",
+  "strict": true,
+  "trailing": true,
+  "undef": true,
+  "unused": true
+}
