@@ -29,4 +29,9 @@ config.stream();
 
 // Get a stream of Vinyl files for machine aliased prod
 config.stream('prod');
+
+// Or use a pretty printer in the console
+config.stream()
+    .pipe(dotfiles.pretty())
+    .pipe(process.stdout, {end: false});
 ```

@@ -5,11 +5,11 @@ var readonly = require('read-only-stream');
 var through2 = require('through2');
 
 var bashFactory = require('./bash');
+var pretty = require('./pretty');
 var sshFactory = require('./ssh');
 var util = require('./util');
 
-
-module.exports = function(){
+var api = function(){
 	var app = {};
 
 	var bash = bashFactory(util, app);
@@ -30,3 +30,7 @@ module.exports = function(){
 
 	return app;
 };
+
+api.pretty = pretty;
+
+module.exports = api;
