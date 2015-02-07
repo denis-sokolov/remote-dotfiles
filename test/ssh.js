@@ -16,6 +16,15 @@ test('ssh', function (t) {
 		});
 });
 
+test('ssh', function (t) {
+	dotfiles()
+		.ssh('ServerAliveInterval 30')
+		.stream().on('data', function(file){
+			t.ok(file.contents.toString().indexOf('generated') > -1, 'has comment on generation');
+			t.end();
+		});
+});
+
 test('ssh alphabetized', function (t) {
 	dotfiles()
 		.servers([{host:'b.example.com'}, {host:'a.example.com'}])
