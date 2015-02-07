@@ -74,6 +74,19 @@ test('ssh proxy does not set from.host', function (t) {
 		});
 });
 
+test('ssh proxy sets from.host', function (t) {
+	t.plan(1);
+	dotfiles()
+		.servers([{host:'example.com'}, {host:'proxy.example.com'}])
+		.proxies(function(from){
+			if (!from.host)
+				t.fail('should set from.host');
+		})
+		.stream('proxy.example.com').on('data', function(){
+			t.pass();
+		});
+});
+
 test('ssh proxy remote self', function (t) {
 	dotfiles()
 		.servers([{host:'example.com'}, {host:'proxy.example.com'}])

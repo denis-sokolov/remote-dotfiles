@@ -12,3 +12,12 @@ test('remote', function (t) {
 			t.end();
 		});
 });
+
+test('remote throws on wrong alias', function (t) {
+	t.throws(function(){
+		dotfiles()
+			.servers([{host:'example.com', port: 3133, alias: 'example'}])
+			.stream('wrong');
+	});
+	t.end();
+});

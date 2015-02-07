@@ -3,18 +3,10 @@
 var is = require('is');
 var Vinyl = require('vinyl');
 
-var normalize = function(servers){
-	return servers && servers.map(function(server){
-		server.alias = server.alias || server.host;
-		return server;
-	}).sort(function(a, b){
-		return a.alias.localeCompare(b.alias);
-	});
-};
-
 var contents = function(servers, proxies, custom, target){
+
 	return (servers || []).filter(function(server){
-		return server.alias !== target;
+		return server.alias !== target.alias;
 	}).map(function(server){
 		var rules = [];
 
@@ -24,8 +16,8 @@ var contents = function(servers, proxies, custom, target){
 		if (server.port)
 			rules.push('Port ' + server.port);
 
-		var proxy = proxies && proxies({}, server);
-		if (proxy && proxy !== target)
+		var proxy = proxies && proxies(target, server);
+		if (proxy && proxy !== target.alias)
 			rules.push('ProxyCommand ssh ' + proxy + ' -W %h:%p 2>/dev/null');
 
 		return 'Host ' + server.alias + '\n' +
@@ -36,14 +28,13 @@ var contents = function(servers, proxies, custom, target){
 module.exports = function(util, app){
 	var custom = util.setting(app, 'ssh', is.string);
 	var proxies = util.setting(app, 'proxies', is.function);
-	var servers = util.setting(app, 'servers', is.array);
 
-	return function(stream, target){
-		if (!servers() && !custom()) return;
+	return function(stream, servers, target){
+		if (!servers && !custom()) return;
 
 		stream.push(new Vinyl({
 			path: '.ssh/config',
-			contents: new Buffer(contents(normalize(servers()), proxies(), custom(), target))
+			contents: new Buffer(contents(servers, proxies(), custom(), target))
 		}));
 	};
 };
