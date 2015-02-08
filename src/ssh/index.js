@@ -15,6 +15,9 @@ var contents = function(servers, proxies, custom, target){
 		if (server.port)
 			rules.push('Port ' + server.port);
 
+		if (server.user)
+			rules.push('User ' + server.user);
+
 		var proxy = proxies && proxies(target, server);
 		if (proxy && proxy !== target.alias)
 			rules.push('ProxyCommand ssh ' + proxy + ' -W %h:%p 2>/dev/null');
