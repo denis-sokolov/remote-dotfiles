@@ -34,3 +34,31 @@ test('bash remote', function(t){
 			t.end();
 		});
 });
+
+test('bash list', function(t) {
+	dotfiles()
+		.bash([
+			__dirname + '/fixtures/bash/aliases*',
+			__dirname + '/fixtures/bash/functions*'
+		])
+		.stream().on('data', function(file){
+			var contents = file.contents.toString();
+			t.ok(contents.indexOf('foo=') > -1, 'includes aliases');
+			t.ok(contents.indexOf('foo()') > -1, 'includes functions');
+			t.end();
+		});
+});
+
+test('bash separate arguments', function(t) {
+	dotfiles()
+		.bash(
+			__dirname + '/fixtures/bash/aliases*',
+			__dirname + '/fixtures/bash/functions*'
+		)
+		.stream().on('data', function(file){
+			var contents = file.contents.toString();
+			t.ok(contents.indexOf('foo=') > -1, 'includes aliases');
+			t.ok(contents.indexOf('foo()') > -1, 'includes functions');
+			t.end();
+		});
+});

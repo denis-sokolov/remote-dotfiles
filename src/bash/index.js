@@ -11,7 +11,7 @@ module.exports = function(util, app){
 			if (!globs())
 				return resolve();
 
-			var ours = vinylFs.src.apply(vinylFs, globs())
+			var ours = vinylFs.src.call(vinylFs, [].concat.apply([], globs()))
 				.pipe(util.concat('.bashrc'))
 				.pipe(util.comment('#', 'Use .bashrc.local for editing'))
 				.pipe(util.append('. .bashrc.local'));

@@ -35,3 +35,22 @@ config.stream()
     .pipe(dotfiles.pretty())
     .pipe(process.stdout, {end: false});
 ```
+
+## `.bash`
+
+```javascript
+// Short call
+config.bash(__dirname + '/*.sh');
+
+// Use a list
+config.bash([
+    __dirname + '/*.sh',
+    __dirname + '/*.bash'
+]);
+
+// Use separate arguments
+config.bash(
+    __dirname + '/*.sh',
+    __dirname + '/*.bash'
+);
+```
