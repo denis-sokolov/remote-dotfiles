@@ -53,4 +53,10 @@ config.bash(
     __dirname + '/*.sh',
     __dirname + '/*.bash'
 );
+
+// Use raw data
+config.bash(
+    'alias foo=bar',
+    __dirname + '/*.bash'
+);
 ```

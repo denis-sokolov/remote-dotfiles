@@ -2,6 +2,8 @@
 
 var concat = require('gulp-concat');
 var through2 = require('through2');
+var Vinyl = require('vinyl');
+var vinylFs = require('vinyl-fs');
 
 var not = function(f){
 	return function(){
@@ -60,6 +62,43 @@ api.settings = function(app, name, type){
 	return function(){
 		return args;
 	};
+};
+
+var getSingleSource = function(param){
+	if (param[0] === '/')
+		return vinylFs.src(param);
+	var stream = through2.obj();
+	stream.push(new Vinyl({
+		contents: new Buffer(param),
+		path: '/tmp/pseudo'
+	}));
+	stream.end();
+	return stream;
+};
+
+// Like vinyl-fs.src, but allows some of the globs to be raw file data,
+// if does not begin with a slash.
+// Can't simply filter and pipe to ensure the order.
+api.src = function(params){
+	params = [].concat.apply([], params);
+
+	var stream = through2.obj();
+
+	if (params.length === 0) {
+		stream.end();
+		return stream;
+	}
+
+	var first = params[0];
+	var rest = params.slice(1);
+
+	var source = getSingleSource(first);
+	source.pipe(stream, {end:false});
+	source.on('end', function(){
+		api.src(rest).pipe(stream);
+	});
+
+	return stream;
 };
 
 module.exports = api;

@@ -62,3 +62,17 @@ test('bash separate arguments', function(t) {
 			t.end();
 		});
 });
+
+test('bash takes raw values along globs', function(t) {
+	dotfiles()
+		.bash(
+			'raw=bar',
+			__dirname + '/fixtures/bash/functions*'
+		)
+		.stream().on('data', function(file){
+			var contents = file.contents.toString();
+			t.ok(contents.indexOf('raw=') > -1, 'includes raw');
+			t.ok(contents.indexOf('foo()') > -1, 'includes functions');
+			t.end();
+		});
+});
