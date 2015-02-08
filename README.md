@@ -19,7 +19,12 @@ var config = dotfiles()
     .proxies(function(from, to){
         if (to === 'prod') return 'gate';
     })
-    .ssh('ServerAliveInterval 30');
+    .ssh('ServerAliveInterval 30')
+    .custom({
+        // Deploy any custom files
+        // Make sure a custom file has a string 'remote-dotfiles' in it to enable overwriting
+        '.gitignore': __dirname + '/gitconfig'
+    });
 ```
 
 You can investigate the resulting config file set:

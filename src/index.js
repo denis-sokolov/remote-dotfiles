@@ -6,6 +6,7 @@ var readonly = require('read-only-stream');
 var through2 = require('through2');
 
 var bashFactory = require('./bash');
+var customFactory = require('./custom');
 var deploy = require('./deploy');
 var pretty = require('./pretty');
 var sshFactory = require('./ssh');
@@ -24,6 +25,7 @@ var api = function(){
 	var app = {};
 
 	var bash = bashFactory(util, app);
+	var custom = customFactory(util, app);
 	var ssh = sshFactory(util, app);
 	var servers = util.setting(app, 'servers', is.array);
 
@@ -43,6 +45,7 @@ var api = function(){
 
 		Promise.all([
 			bash(stream, srvs, target),
+			custom(stream),
 			ssh(stream, srvs, target)
 		]).then(function(){
 			stream.end();
