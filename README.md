@@ -36,6 +36,15 @@ config.stream()
     .pipe(process.stdout, {end: false});
 ```
 
+Now you should deploy it:
+```javascript
+config.deploy();
+
+config.deploy(function(progress){
+    console.log(Math.round(progress * 100) + '% done.');
+});
+```
+
 ## `.bash`
 
 ```javascript

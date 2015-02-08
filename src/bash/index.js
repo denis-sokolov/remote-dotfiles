@@ -12,7 +12,7 @@ module.exports = function(util, app){
 
 			var ours = util.src(sources())
 				.pipe(util.concat('.bashrc'))
-				.pipe(util.comment('#', 'Use .bashrc.local for editing'))
+				.pipe(util.comment.stream('# ', 'Use .bashrc.local for editing'))
 				.pipe(util.append('. .bashrc.local'));
 			ours.pipe(stream, {end: false});
 			ours.on('end', function(){

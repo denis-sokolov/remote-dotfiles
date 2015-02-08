@@ -6,6 +6,7 @@ var readonly = require('read-only-stream');
 var through2 = require('through2');
 
 var bashFactory = require('./bash');
+var deploy = require('./deploy');
 var pretty = require('./pretty');
 var sshFactory = require('./ssh');
 var util = require('./util');
@@ -25,6 +26,8 @@ var api = function(){
 	var bash = bashFactory(util, app);
 	var ssh = sshFactory(util, app);
 	var servers = util.setting(app, 'servers', is.array);
+
+	app.deploy = deploy.bind(null, util, app, servers);
 
 	app.stream = function(targetAlias){
 		var stream = through2.obj();
@@ -50,6 +53,7 @@ var api = function(){
 
 	return app;
 };
+
 
 api.pretty = pretty;
 
