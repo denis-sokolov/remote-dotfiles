@@ -43,11 +43,11 @@ config.stream()
 
 Now you should deploy it:
 ```javascript
-config.deploy();
+config.deploy().done();
 
 config.deploy(function(progress){
     console.log(Math.round(progress * 100) + '% done.');
-});
+}).done();
 ```
 
 ## `.bash`
