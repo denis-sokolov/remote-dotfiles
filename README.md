@@ -5,6 +5,7 @@
 [![Coverage Status](https://img.shields.io/coveralls/denis-sokolov/remote-dotfiles.svg)](https://coveralls.io/r/denis-sokolov/remote-dotfiles?branch=master)
 [![bitHound Score](https://app.bithound.io/denis-sokolov/remote-dotfiles/badges/score.svg)](http://app.bithound.io/denis-sokolov/remote-dotfiles)
 [![Dependency Status](https://gemnasium.com/denis-sokolov/remote-dotfiles.svg)](https://gemnasium.com/denis-sokolov/remote-dotfiles)
+[![npm version](https://img.shields.io/npm/v/remote-dotfiles.svg)](https://www.npmjs.com/package/remote-dotfiles)
 
 Describe your dotfiles configuration, have it automatically tuned for every server and then automatically deploy to all your servers.
 
