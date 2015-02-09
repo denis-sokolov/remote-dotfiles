@@ -1,5 +1,11 @@
 # Remote dotfiles
 
+[![Build Status](https://travis-ci.org/denis-sokolov/remote-dotfiles.svg?branch=master)](https://travis-ci.org/denis-sokolov/remote-dotfiles)
+[![Code Climate](http://img.shields.io/codeclimate/github/denis-sokolov/remote-dotfiles.svg)](https://codeclimate.com/github/denis-sokolov/remote-dotfiles)
+[![Coverage Status](https://img.shields.io/coveralls/denis-sokolov/remote-dotfiles.svg)](https://coveralls.io/r/denis-sokolov/remote-dotfiles?branch=master)
+[![bitHound Score](https://app.bithound.io/denis-sokolov/remote-dotfiles/badges/score.svg)](http://app.bithound.io/denis-sokolov/remote-dotfiles)
+[![Dependency Status](https://gemnasium.com/denis-sokolov/remote-dotfiles.svg)](https://gemnasium.com/denis-sokolov/remote-dotfiles)
+
 Describe your dotfiles configuration, have it automatically tuned for every server and then automatically deploy to all your servers.
 
 ```javascript

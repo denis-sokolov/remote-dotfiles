@@ -20,6 +20,7 @@
     "vinyl-fs": "^0.3.13"
   },
   "devDependencies": {
+    "coveralls": "^2.11.2",
     "eslint": "^0.13.0",
     "istanbul": "^0.3.5",
     "jshint": "^2.6.0",
@@ -31,6 +32,7 @@
     "lint": "jshint src test && eslint src test",
     "test": "tape test/*.js | tap-colorize",
     "coverage": "istanbul cover tape test/*.js",
+    "report-coverage": "istanbul cover --report lcovonly tape test/*.js && coveralls < coverage/lcov.info",
     "watch-tests": "watch 'npm test'",
     "prepublish": "npm run lint && npm test"
   },
