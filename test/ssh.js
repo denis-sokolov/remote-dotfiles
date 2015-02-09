@@ -6,12 +6,13 @@ var dotfiles = require('..');
 
 test('ssh', function (t) {
 	dotfiles()
-		.servers([{host:'example.com', port: 3133, alias: 'example'}])
+		.servers([{host:'example.com', port: 3133, alias: 'example', user: 'john'}])
 		.stream().on('data', function(file){
 			t.equal(file.relative, '.ssh/config', 'has .ssh/config name');
 			t.ok(file.contents.toString().indexOf('Host example') > -1, 'has Host rule');
 			t.ok(file.contents.toString().indexOf('HostName example.com') > -1, 'has Host rule');
 			t.ok(file.contents.toString().indexOf('Port 3133') > -1, 'has Port');
+			t.ok(file.contents.toString().indexOf('User john') > -1, 'has User');
 			t.end();
 		});
 });
