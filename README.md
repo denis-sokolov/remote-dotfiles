@@ -12,6 +12,7 @@ var config = dotfiles()
         },
         {
             alias: 'gate',
+            forwardAgent: true,
             host: 'gateway.example.com',
             port: 3133
         }

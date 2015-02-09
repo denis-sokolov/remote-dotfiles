@@ -44,6 +44,15 @@ test('ssh empty', function (t) {
 		});
 });
 
+test('ssh forwardAgent', function (t) {
+	dotfiles()
+		.servers([{host:'example.com', forwardAgent:true}])
+		.stream().on('data', function(file){
+			t.ok(file.contents.toString().indexOf('ForwardAgent') > -1, 'has ForwardAgent');
+			t.end();
+		});
+});
+
 
 test('ssh custom', function (t) {
 	dotfiles()

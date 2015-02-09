@@ -12,6 +12,9 @@ var contents = function(servers, proxies, custom, target){
 		if (server.alias !== server.host)
 			rules.push('HostName ' + server.host);
 
+		if (server.forwardAgent)
+			rules.push('ForwardAgent yes');
+
 		if (server.port)
 			rules.push('Port ' + server.port);
 
