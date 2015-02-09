@@ -44,7 +44,7 @@ var api = function(){
 		}
 
 		Promise.all([
-			bash(stream, srvs, target),
+			bash(stream, target),
 			custom(stream),
 			ssh(stream, srvs, target)
 		]).then(function(){

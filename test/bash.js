@@ -76,3 +76,26 @@ test('bash takes raw values along globs', function(t) {
 			t.end();
 		});
 });
+
+test('bash takes functions', function(t) {
+	t.plan(2);
+	var config = dotfiles()
+		.servers([{host:'example.com'}])
+		.bash(
+			function(server){
+				if (server.alias === 'example.com')
+					return 'echo onremote';
+				return 'echo onlocal';
+			}
+		);
+	config.stream().on('data', function(file){
+		if (file.relative !== '.bashrc')
+			return;
+		t.ok(file.contents.toString().indexOf('onlocal') > -1, 'includes local result');
+	});
+	config.stream('example.com').on('data', function(file){
+		if (file.relative !== '.bashrc')
+			return;
+		t.ok(file.contents.toString().indexOf('onremote') > -1, 'includes remote result');
+	});
+});

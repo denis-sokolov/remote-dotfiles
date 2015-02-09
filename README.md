@@ -74,4 +74,12 @@ config.bash(
     'alias foo=bar',
     __dirname + '/*.bash'
 );
+
+// Use functions
+config.bash(
+    // server will be an empty object if generating for localhost
+    function(server){
+        return 'echo Welcome to ' + server.alias;
+    }
+);
 ```

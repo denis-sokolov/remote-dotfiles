@@ -81,7 +81,9 @@ api.settings = function(app, name, type){
 	};
 };
 
-var getSingleSource = function(param){
+var getSingleSource = function(param, target){
+	if (typeof param === 'function')
+		param = param(target);
 	if (param[0] === '/')
 		return vinylFs.src(param);
 	var stream = through2.obj();
@@ -94,9 +96,9 @@ var getSingleSource = function(param){
 };
 
 // Like vinyl-fs.src, but allows some of the globs to be raw file data,
-// if does not begin with a slash.
+// if does not begin with a slash, and dynamic data if a function.
 // Can't simply filter and pipe to ensure the order.
-api.src = function(params){
+api.src = function(params, target){
 	params = [].concat.apply([], params);
 
 	var stream = through2.obj();
@@ -109,10 +111,10 @@ api.src = function(params){
 	var first = params[0];
 	var rest = params.slice(1);
 
-	var source = getSingleSource(first);
+	var source = getSingleSource(first, target);
 	source.pipe(stream, {end:false});
 	source.on('end', function(){
-		api.src(rest).pipe(stream);
+		api.src(rest, target).pipe(stream);
 	});
 
 	return stream;
