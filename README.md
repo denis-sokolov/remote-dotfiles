@@ -58,6 +58,11 @@ config.deploy(function(progress){
 }).done();
 ```
 
+Or, for quicker iterating, you can temporarily only deploy locally:
+```javascript
+config.deploy.local().done();
+```
+
 ## `.bash`
 
 ```javascript

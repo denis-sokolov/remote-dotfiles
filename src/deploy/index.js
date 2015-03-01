@@ -47,9 +47,13 @@ var deploy = function(stream, client){
 	});
 };
 
+var local = function(app){
+	return deploy(app.stream(), clients.fs(process.env.HOME));
+};
+
 module.exports = function(util, app, servers, progress){
 	var step = util.progress(servers().length + 1, progress || cli.progress);
-	return deploy(app.stream(), clients.fs(process.env.HOME)).then(function(){
+	return local(app).then(function(){
 		step();
 		return Promise.all(servers().map(function(srv){
 			return deploy(app.stream(srv.alias), clients.ssh(srv.alias))
@@ -57,3 +61,5 @@ module.exports = function(util, app, servers, progress){
 		}));
 	});
 };
+
+module.exports.local = local;

@@ -30,6 +30,7 @@ var api = function(){
 	var servers = util.setting(app, 'servers', is.array);
 
 	app.deploy = deploy.bind(null, util, app, servers);
+	app.deploy.local = deploy.local.bind(null, app);
 
 	app.stream = function(targetAlias){
 		var stream = through2.obj();
