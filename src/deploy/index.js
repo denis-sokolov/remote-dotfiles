@@ -6,18 +6,30 @@ var through2 = require('through2');
 
 var clients = require('./clients');
 
+
+/**
+ * Ignored statements in this function refer to the portions of the source code
+ * that deal with such options combinations that do not allow for fake clients
+ * to be injected.
+ */
 var deployOptions = function(options){
+	/* istanbul ignore if */
 	if (typeof options === 'function')
 		options = { progress: options };
+	/* istanbul ignore next */
 	options = options || {};
+	/* istanbul ignore next */
 	options.progress = options.progress || cli.progress;
 	if (options.clients.read || typeof options.clients === 'function')
 		options.clients = {
 			fs: options.clients,
 			ssh: options.clients
 		};
+	/* istanbul ignore next */
 	options.clients = options.clients || {};
+	/* istanbul ignore next */
 	options.clients.fs = options.clients.fs || clients.fs;
+	/* istanbul ignore next */
 	options.clients.ssh = options.clients.ssh || clients.ssh;
 	if (typeof options.clients.fs !== 'function')
 		options.clients.fs = (function(value){

@@ -1,5 +1,10 @@
 'use strict';
 
+/**
+ * This file is ignored for code coverage because it consists of touching
+ * real FS and SSH.
+ */
+
 var spawn = require('child_process').spawn;
 var fs = require('fs');
 var path = require('path');
@@ -7,6 +12,7 @@ var path = require('path');
 var quote = require('shell-quote').quote;
 var Promise = require('promise');
 
+/* istanbul ignore next */
 var childError = function(code, stderr){
 	var e = new Error(stderr);
 	e.code = code;
@@ -15,6 +21,7 @@ var childError = function(code, stderr){
 
 var api = {};
 
+/* istanbul ignore next */
 api.fs = function(directory){
 	return {
 		read: function(filepath){
@@ -26,6 +33,7 @@ api.fs = function(directory){
 	};
 };
 
+/* istanbul ignore next */
 api.ssh = function(server){
 	return {
 		read: function(filepath){
