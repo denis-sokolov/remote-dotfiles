@@ -6,6 +6,30 @@ var through2 = require('through2');
 
 var clients = require('./clients');
 
+var deployOptions = function(options){
+	if (typeof options === 'function')
+		options = { progress: options };
+	options = options || {};
+	options.progress = options.progress || cli.progress;
+	if (options.clients.read || typeof options.clients === 'function')
+		options.clients = {
+			fs: options.clients,
+			ssh: options.clients
+		};
+	options.clients = options.clients || {};
+	options.clients.fs = options.clients.fs || clients.fs;
+	options.clients.ssh = options.clients.ssh || clients.ssh;
+	if (typeof options.clients.fs !== 'function')
+		options.clients.fs = (function(value){
+			return function(){ return value; };
+		})(options.clients.fs);
+	if (typeof options.clients.ssh !== 'function')
+		options.clients.ssh = (function(value){
+			return function(){ return value; };
+		})(options.clients.ssh);
+	return options;
+};
+
 var backup = function(client, tag){
 	return through2.obj(function(file, enc, cb){
 		var filepath = file.relative;
@@ -47,16 +71,53 @@ var deploy = function(stream, client){
 	});
 };
 
-var local = function(app){
-	return deploy(app.stream(), clients.fs(process.env.HOME));
+var local = function(app, options){
+	options = deployOptions(options);
+	return deploy(app.stream(), options.clients.fs(process.env.HOME));
 };
 
-module.exports = function(util, app, servers, progress){
-	var step = util.progress(servers().length + 1, progress || cli.progress);
-	return local(app).then(function(){
+/**
+ * Options can be a function as a shortcut for progress or a full object:
+ * {
+ *   progress: function(progress){}
+ * }
+ *
+ *
+ * FS and SSH behavior can be modified with an unsupported option "clients".
+ *
+ * Simple use:
+ * {
+ *   clients: {
+ *     read: function(filepath){ return Promise.resolve(data); },
+ *     write: function(filepath, data){ return Promise.resolve(); }
+ *   }
+ * }
+ *
+ * Separate FS and SSH behavior:
+ * {
+ *   clients: {
+ *     fs: { read, write },
+ *     ssh: { read, write }
+ *   }
+ * }
+ *
+ * Constructors with more options:
+ * {
+ *   clients: {
+ *     fs: function(basedir){ return { read, write }; },
+ *     ssh: function(serverAlias){ return { read, write }; }
+ *   }
+ * }
+ */
+module.exports = function(util, app, servers, options){
+	options = deployOptions(options);
+	var srvs = servers() || [];
+
+	var step = util.progress(srvs.length + 1, options.progress);
+	return local(app, options).then(function(){
 		step();
-		return Promise.all(servers().map(function(srv){
-			return deploy(app.stream(srv.alias), clients.ssh(srv.alias))
+		return Promise.all(srvs.map(function(srv){
+			return deploy(app.stream(srv.alias), options.clients.ssh(srv.alias))
 				.then(step);
 		}));
 	});
