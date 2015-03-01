@@ -7,6 +7,12 @@ var path = require('path');
 var quote = require('shell-quote').quote;
 var Promise = require('promise');
 
+var childError = function(code, stderr){
+	var e = new Error(stderr);
+	e.code = code;
+	return e;
+};
+
 var api = {};
 
 api.fs = function(directory){
@@ -33,7 +39,7 @@ api.ssh = function(server){
 					if (code === 0) {
 						resolve(stdout);
 					} else {
-						reject(new Error('Code ' + code + '; Stderr: \n' + stderr));
+						reject(childError(code, stderr));
 					}
 				});
 			});
@@ -51,7 +57,7 @@ api.ssh = function(server){
 					if (code === 0) {
 						resolve(stdout);
 					} else {
-						reject(new Error('Code ' + code + '; Stderr: \n' + stderr));
+						reject(childError(code, stderr));
 					}
 				});
 			});
