@@ -55,3 +55,39 @@ test('deploy local', function(t) {
 	t.equal(typeof dotfiles().deploy.local, 'function');
 	t.end();
 });
+
+test('deploy slower', function(t) {
+	t.plan(2);
+
+	var currentServer;
+
+	dotfiles()
+		.bash(__dirname + '/fixtures/bash/*')
+		.servers([{host: 'example.com'}, {host: 'another.example.com'}])
+		.deploy({
+			clients: {
+				fs: { read: reader(), write: function(){ return Promise.resolve(); }},
+				ssh: function(alias) {
+					t.pass('started ' + alias);
+					currentServer = alias;
+					return {
+						read: reader(),
+						write: function(){
+							return new Promise(function(resolve){
+								if (alias !== currentServer)
+									t.fail('Should be calling sequentially because parallelLimit 1');
+								setTimeout(function(){
+									resolve();
+								}, 100);
+							});
+						}
+					};
+				}
+			},
+			parallelLimit: 1,
+			progress: function(){}
+		})
+		.then(function(){
+			t.end();
+		});
+});

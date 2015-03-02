@@ -1,5 +1,6 @@
 'use strict';
 
+var async = require('async');
 var cli = require('cli');
 var Promise = require('promise');
 var through2 = require('through2');
@@ -39,6 +40,7 @@ var deployOptions = function(options){
 		options.clients.ssh = (function(value){
 			return function(){ return value; };
 		})(options.clients.ssh);
+	options.parallelLimit = options.parallelLimit || 10;
 	return options;
 };
 
@@ -128,10 +130,12 @@ module.exports = function(util, app, servers, options){
 	var step = util.progress(srvs.length + 1, options.progress);
 	return local(app, options).then(function(){
 		step();
-		return Promise.all(srvs.map(function(srv){
-			return deploy(app.stream(srv.alias), options.clients.ssh(srv.alias))
-				.then(step);
-		}));
+		return Promise.denodeify(async.parallelLimit)(srvs.map(function(srv){
+			return Promise.nodeify(function(){
+				return deploy(app.stream(srv.alias), options.clients.ssh(srv.alias))
+					.then(step);
+			});
+		}), options.parallelLimit);
 	});
 };
 

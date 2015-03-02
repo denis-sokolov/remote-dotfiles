@@ -56,6 +56,13 @@ config.deploy().done();
 config.deploy(function(progress){
     console.log(Math.round(progress * 100) + '% done.');
 }).done();
+
+config.deploy({
+    // Limit the parallel deployments over SSH
+    parallelLimit: 3,
+
+    progress: function(){}
+})
 ```
 
 Or, for quicker iterating, you can temporarily only deploy locally:
