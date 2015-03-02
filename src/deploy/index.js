@@ -21,13 +21,13 @@ var deployOptions = function(options){
 	options = options || {};
 	/* istanbul ignore next */
 	options.progress = options.progress || cli.progress;
+	/* istanbul ignore next */
+	options.clients = options.clients || {};
 	if (options.clients.read || typeof options.clients === 'function')
 		options.clients = {
 			fs: options.clients,
 			ssh: options.clients
 		};
-	/* istanbul ignore next */
-	options.clients = options.clients || {};
 	/* istanbul ignore next */
 	options.clients.fs = options.clients.fs || clients.fs;
 	/* istanbul ignore next */
