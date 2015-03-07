@@ -68,6 +68,11 @@ var dest = function(client){
 	return through2.obj(function(file, enc, cb){
 		client.write(file.relative, file.contents)
 			.then(function(){
+				if (file.executable) {
+					return client.makeExecutable(file.relative);
+				}
+			}, cb)
+			.then(function(){
 				cb(null, file);
 			}, cb);
 	});

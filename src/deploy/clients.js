@@ -43,6 +43,12 @@ var api = {};
 /* istanbul ignore next */
 api.fs = function(directory){
 	return {
+		makeExecutable: function(filepath){
+			return Promise.denodeify(fs.chmod)(
+				path.join(directory, filepath),
+				parseInt('0755', 8)
+			);
+		},
 		read: function(filepath){
 			return Promise.denodeify(fs.readFile)(path.join(directory, filepath));
 		},
@@ -59,6 +65,9 @@ api.fs = function(directory){
 /* istanbul ignore next */
 api.ssh = function(server){
 	return {
+		makeExecutable: function(filepath){
+			return run(['ssh', [server, quote(['chmod', '+x', filepath])]]);
+		},
 		read: function(filepath){
 			return run(['ssh', [server, quote(['cat', filepath])]]);
 		},
