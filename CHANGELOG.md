@@ -1,3 +1,7 @@
+# v1.2
+
+* `.bin`
+
 # v1.1
 
 * `deploy` now has a `parallelLimit` option.
