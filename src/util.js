@@ -48,6 +48,20 @@ api.comment.stream = function(chr, txt){
 	});
 };
 
+/**
+ * A function to rename files in a stream, only considering the relative path
+ */
+api.rename = function(f){
+	return through2.obj(function(chunk, enc, cb){
+		this.push(new Vinyl({
+			contents: chunk.contents,
+			path: '/' + f(chunk.relative),
+			base: '/'
+		}));
+		cb();
+	});
+};
+
 api.progress = function(count, cb){
 	var done = 0;
 	return function(){
