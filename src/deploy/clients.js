@@ -9,6 +9,7 @@ var spawn = require('child_process').spawn;
 var fs = require('fs');
 var path = require('path');
 
+var mkdirp = require('mkdirp');
 var quote = require('shell-quote').quote;
 var Promise = require('promise');
 
@@ -28,7 +29,11 @@ api.fs = function(directory){
 			return Promise.denodeify(fs.readFile)(path.join(directory, filepath));
 		},
 		write: function(filepath, data){
-			return Promise.denodeify(fs.writeFile)(path.join(directory, filepath), data);
+			var fileAbsPath = path.join(directory, filepath);
+			var dirpath = path.dirname(fileAbsPath);
+			return Promise.denodeify(mkdirp)(dirpath).then(function(){
+				return Promise.denodeify(fs.writeFile)(fileAbsPath, data);
+			});
 		}
 	};
 };
@@ -54,7 +59,12 @@ api.ssh = function(server){
 		},
 		write: function(filepath, filecontents){
 			return new Promise(function(resolve, reject){
-				var write = spawn('ssh', [server, quote(['cat', '>', filepath])]);
+				var remoteCommand = ['cat', '>', filepath];
+				if (filepath.indexOf('/') > -1) {
+					remoteCommand = ['mkdir', '-p', path.dirname(filepath), '&&']
+						.concat(remoteCommand);
+				}
+				var write = spawn('ssh', [server, quote(remoteCommand)]);
 				var stdout = '';
 				var stderr = '';
 				write.stdin.write(filecontents);
