@@ -51,6 +51,20 @@ test('deploy', function(t) {
 	});
 });
 
+test('deploy executable', function(t) {
+	dotfiles()
+		.bin(__dirname + '/fixtures/bin/foo.py')
+		.deploy({
+			clients: {
+				fs: {
+					read: reader(),
+					write: function(){ return Promise.resolve(); },
+					makeExecutable: function() { t.end(); return Promise.resolve(); }
+				}
+			}
+		});
+});
+
 test('deploy local', function(t) {
 	t.equal(typeof dotfiles().deploy.local, 'function');
 	t.end();

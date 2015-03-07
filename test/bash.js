@@ -99,3 +99,21 @@ test('bash takes functions', function(t) {
 		t.ok(file.contents.toString().indexOf('onremote') > -1, 'includes remote result');
 	});
 });
+
+test('bash bin', function(t){
+	t.plan(4);
+	dotfiles()
+		.bin(
+			__dirname + '/fixtures/bin/foo.py'
+		)
+		.stream()
+		.on('data', function(file){
+			if (file.relative === '.bashrc') {
+				t.ok(file.contents.toString().indexOf('.bin:$PATH') > -1, 'adds PATH modification');
+			} else {
+				t.equal(file.relative, '.bin/foo');
+				t.ok(file.executable);
+				t.equal(file.contents.toString(), 'foobar\n');
+			}
+		});
+});

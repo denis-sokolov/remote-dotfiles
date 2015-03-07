@@ -12,6 +12,7 @@ Describe your dotfiles configuration, have it automatically tuned for every serv
 ```javascript
 var config = dotfiles()
     .bash(__dirname + '/bash/*.sh')
+    .bin(__dirname + '/bin/*')
     .servers([
         {
             alias: 'prod',
@@ -102,3 +103,24 @@ config.bash(
     }
 );
 ```
+
+## `.bin`
+
+```javascript
+// Short call
+config.bash(__dirname + '/*.py');
+
+// Use a list
+config.bash([
+    __dirname + '/foo.py',
+    __dirname + '/bar.py'
+]);
+
+// Use separate arguments
+config.bash(
+    __dirname + '/foo.py',
+    __dirname + '/bar.py'
+);
+```
+
+As a result, added files will be added to `PATH` with their extensions stripped.
