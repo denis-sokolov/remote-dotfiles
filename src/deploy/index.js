@@ -81,6 +81,7 @@ var dest = function(client){
 var deploy = function(stream, client){
 	return new Promise(function(resolve, reject){
 		stream
+			.on('error', reject)
 			.pipe(backup(client, 'remote-dotfiles')).on('error', reject)
 			.pipe(dest(client)).on('error', reject)
 			.on('data', function(){})

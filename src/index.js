@@ -50,6 +50,8 @@ var api = function(){
 			ssh(stream, srvs, target)
 		]).then(function(){
 			stream.end();
+		}).catch(function(err){
+			stream.emit('error', err);
 		});
 
 		return readonly(stream);

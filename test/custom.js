@@ -15,3 +15,18 @@ test('custom', function(t) {
 			t.end();
 		});
 });
+
+test('custom rethrow error', function(t) {
+	dotfiles()
+		.custom({
+			'.foo': __dirname + '/this/path/does/not/exist'
+		})
+		.stream()
+			.on('error', function(err){
+				t.equal(err.code, 'ENOENT');
+				t.end();
+			})
+			.on('end', function(){
+				t.fail('Was supposed to error, not suceed');
+			});
+});
