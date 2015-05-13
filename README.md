@@ -108,16 +108,16 @@ config.bash(
 
 ```javascript
 // Short call
-config.bash(__dirname + '/*.py');
+config.bin(__dirname + '/*.py');
 
 // Use a list
-config.bash([
+config.bin([
     __dirname + '/foo.py',
     __dirname + '/bar.py'
 ]);
 
 // Use separate arguments
-config.bash(
+config.bin(
     __dirname + '/foo.py',
     __dirname + '/bar.py'
 );
