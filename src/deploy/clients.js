@@ -72,12 +72,14 @@ api.ssh = function(server){
 			return run(['ssh', [server, quote(['cat', filepath])]]);
 		},
 		write: function(filepath, filecontents){
-			var remoteCommand = ['cat', '>', filepath];
+			if (!filecontents)
+				throw new Error('Provide file contents');
+			var remoteCommand = ['cat', '>', quote([filepath])];
 			if (filepath.indexOf('/') > -1) {
-				remoteCommand = ['mkdir', '-p', path.dirname(filepath), '&&']
+				remoteCommand = ['mkdir', '-p', quote([path.dirname(filepath)]), '&&']
 					.concat(remoteCommand);
 			}
-			return run(['ssh', [server, quote(remoteCommand)]], {
+			return run(['ssh', [server].concat(remoteCommand)], {
 				stdin: filecontents
 			});
 		}
