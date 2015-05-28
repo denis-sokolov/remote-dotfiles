@@ -49,7 +49,7 @@ var backup = function(client, tag){
 		var filepath = file.relative;
 		client.read(filepath)
 			.then(function(data){
-				if (data.toString().indexOf(tag) < 0) {
+				if (data.toString().length && data.toString().indexOf(tag) < 0) {
 					return client.write(filepath + '.orig.' + tag, data);
 				}
 			})
