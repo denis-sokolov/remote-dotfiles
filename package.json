@@ -40,5 +40,9 @@
     "prepublish": "npm run lint && npm test"
   },
   "author": "",
-  "license": "ISC"
+  "license": "ISC",
+  "repository": {
+    "type": "git",
+    "url": "http://github.com/denis-sokolov/remote-dotfiles.git"
+  }
 }
