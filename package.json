@@ -27,7 +27,7 @@
     "jshint": "^2.6.0",
     "tap-colorize": "^1.2.0",
     "tape": "^4.0.0",
-    "watch": "^0.13.0"
+    "watch": "^0.16.0"
   },
   "scripts": {
     "lint": "jshint src test && eslint src test",
