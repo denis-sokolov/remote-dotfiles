@@ -17,8 +17,8 @@
     "read-only-stream": "^1.1.1",
     "shell-quote": "^1.4.2",
     "through2": "^1.1.1",
-    "vinyl": "^0.4.6",
-    "vinyl-fs": "^0.3.13"
+    "vinyl": "^0.5.0",
+    "vinyl-fs": "^1.0.0"
   },
   "devDependencies": {
     "coveralls": "^2.11.2",
