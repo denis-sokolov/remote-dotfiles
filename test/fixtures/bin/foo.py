@@ -1,1 +1,1 @@
-foobar
+print 'Hello, world'

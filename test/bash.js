@@ -113,7 +113,7 @@ test('bash bin', function(t){
 			} else {
 				t.equal(file.relative, '.bin/foo');
 				t.ok(file.executable);
-				t.equal(file.contents.toString(), 'foobar\n');
+				t.equal(file.contents.toString(), 'print \'Hello, world\'\n');
 			}
 		});
 });
