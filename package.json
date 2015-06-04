@@ -7,20 +7,18 @@
     "test": "test"
   },
   "dependencies": {
-    "async": "^0.9.0",
-    "cli": "^0.6.5",
-    "concat-stream": "^1.4.7",
-    "glob": "^4.3.5",
+    "async": "^1.2.0",
+    "cli": "^0.7.1",
     "gulp-concat": "^2.4.3",
-    "is": "^2.2.1",
-    "map-stream": "0.0.5",
+    "is": "^3.0.1",
+    "map-stream": "0.1.0",
     "mkdirp": "^0.5.0",
-    "promise": "^6.1.0",
+    "promise": "^7.0.1",
     "read-only-stream": "^1.1.1",
     "shell-quote": "^1.4.2",
     "through2": "^1.1.1",
-    "vinyl": "^0.4.6",
-    "vinyl-fs": "^0.3.13"
+    "vinyl": "^0.5.0",
+    "vinyl-fs": "^1.0.0"
   },
   "devDependencies": {
     "coveralls": "^2.11.2",
@@ -28,8 +26,8 @@
     "istanbul": "^0.3.5",
     "jshint": "^2.6.0",
     "tap-colorize": "^1.2.0",
-    "tape": "^3.5.0",
-    "watch": "^0.13.0"
+    "tape": "^4.0.0",
+    "watch": "^0.16.0"
   },
   "scripts": {
     "lint": "jshint src test && eslint src test",
