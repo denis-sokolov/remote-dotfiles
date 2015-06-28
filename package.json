@@ -8,7 +8,7 @@
   },
   "dependencies": {
     "async": "^1.2.0",
-    "cli": "^0.7.1",
+    "cli": "^0.8.0",
     "gulp-concat": "^2.4.3",
     "is": "^3.0.1",
     "map-stream": "0.1.0",
