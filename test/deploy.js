@@ -20,7 +20,6 @@ var reader = function(files){
 
 var deploy = function(t, app, opts){
 	opts.read = opts.read || {};
-	opts.want = opts.want || {};
 
 	var written = {};
 
@@ -34,10 +33,12 @@ var deploy = function(t, app, opts){
 		},
 		progress: function(){}
 	}).then(function(){
-		Object.keys(opts.want).forEach(function(k){
-			t.ok(written[k].indexOf(opts.want[k]) > -1, 'contains ' + opts.want[k]);
-		});
-		t.end();
+		if (opts.want) {
+			Object.keys(opts.want).forEach(function(k){
+				t.ok(written[k].indexOf(opts.want[k]) > -1, 'contains ' + opts.want[k]);
+			});
+			t.end();
+		}
 	});
 };
 
