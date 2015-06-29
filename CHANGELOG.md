@@ -1,3 +1,8 @@
+# v1.3
+
+* CLI for deploy
+* Deploy only on one server
+
 # v1.2
 
 * `.bin`
