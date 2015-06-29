@@ -72,6 +72,13 @@ Or, for quicker iterating, you can temporarily only deploy locally:
 config.deploy.local().done();
 ```
 
+## CLI
+You can also deploy from the CLI, if you `module.exports` your config:
+```bash
+remote-dotfiles deploy ./my-config.js local
+remote-dotfiles deploy ./my-config.js all
+```
+
 ## `.bash`
 
 ```javascript
