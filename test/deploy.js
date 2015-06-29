@@ -71,6 +71,48 @@ test('deploy local', function(t) {
 	t.end();
 });
 
+
+test('deploy only one server', function(t) {
+	t.plan(1);
+
+	dotfiles()
+		.bash(__dirname + '/fixtures/bash/*')
+		.servers([{host: 'example.com'}, {host: 'another.example.com'}])
+		.deploy({
+			clients: {
+				fs: { read: reader(), write: function(){ t.fail('No local'); }},
+				ssh: function(alias) {
+					t.equal(alias, 'example.com');
+					return {
+						read: reader(),
+						write: function(){return Promise.resolve(); }
+					};
+				}
+			},
+			progress: function(){},
+			target: 'example.com'
+		})
+		.then(function(){
+			t.end();
+		});
+});
+
+test('deploy fail if target invalid', function(t) {
+	dotfiles()
+		.bash(__dirname + '/fixtures/bash/*')
+		.servers([{host: 'example.com'}, {host: 'another.example.com'}])
+		.deploy({
+			progress: function(){},
+			target: 'non-existing'
+		})
+		.then(function(){
+			t.fail('Should not have succeeded');
+		}, function(){
+			t.pass();
+			t.end();
+		});
+});
+
 test('deploy slower', function(t) {
 	t.plan(2);
 

@@ -9,10 +9,14 @@ module.exports = function(args){
 	var f;
 	if (args.target === 'local')
 		f = app.deploy.local.bind(app.deploy);
-	else if (args.target === 'all')
-		f = app.deploy.bind(null, {parallelLimit: 3});
-	else
-		throw new Error('Unknown target');
+	else {
+		var options = {
+			parallelLimit: 3
+		};
+		if (args.target !== 'all')
+			options.target = args.target;
+		f = app.deploy.bind(null, options);
+	}
 
 	f().then(null, function(err){
 		/* eslint-disable no-process-exit */

@@ -41,6 +41,7 @@ var deployOptions = function(options){
 			return function(){ return value; };
 		})(options.clients.ssh);
 	options.parallelLimit = options.parallelLimit || 10;
+	options.target = options.target || 'all';
 	return options;
 };
 
@@ -131,18 +132,33 @@ var local = function(app, options){
  */
 module.exports = function(util, app, servers, options){
 	options = deployOptions(options);
-	var srvs = servers() || [];
 
-	var step = util.progress(srvs.length + 1, options.progress);
-	return local(app, options).then(function(){
-		step();
-		return Promise.denodeify(async.parallelLimit)(srvs.map(function(srv){
-			return Promise.nodeify(function(){
-				return deploy(app.stream(srv.alias), options.clients.ssh(srv.alias))
-					.then(step);
-			});
-		}), options.parallelLimit);
-	});
+	var tasks = [];
+
+	if (options.target === 'local' || options.target === 'all') {
+		tasks.push(local.bind(null, app, options));
+	}
+
+	var srvs = servers() || [];
+	if (options.target !== 'all') {
+		srvs = srvs.filter(function(server){
+			return server.alias === options.target;
+		});
+		if (srvs.length === 0)
+			return Promise.reject('No such server');
+	}
+	tasks = tasks.concat(srvs.map(function(srv){
+		return function(){
+			return deploy(app.stream(srv.alias), options.clients.ssh(srv.alias));
+		};
+	}));
+
+	var step = util.progress(tasks.length, options.progress);
+	return Promise.denodeify(async.parallelLimit)(tasks.map(function(task){
+		return Promise.nodeify(function(){
+			return task().then(step);
+		});
+	}), options.parallelLimit);
 };
 
 module.exports.local = local;

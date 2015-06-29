@@ -20,8 +20,7 @@ deployParser.addArgument(['configuration'], {
 	help: 'Your dotfiles configuration in a JavaScript file that module.exports'
 });
 deployParser.addArgument(['target'], {
-	choices: ['local', 'all'],
-	help: 'Where to deploy'
+	help: 'Where to deploy, a server alias, "all", or "local"'
 });
 var args = parser.parseArgs();
 

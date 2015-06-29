@@ -63,7 +63,10 @@ config.deploy({
     // Limit the parallel deployments over SSH
     parallelLimit: 3,
 
-    progress: function(){}
+    progress: function(){},
+
+    // Only deploy to one server
+    target: 'host-alias'
 })
 ```
 
@@ -77,6 +80,7 @@ You can also deploy from the CLI, if you `module.exports` your config:
 ```bash
 remote-dotfiles deploy ./my-config.js local
 remote-dotfiles deploy ./my-config.js all
+remote-dotfiles deploy ./my-config.js server-alias
 ```
 
 ## `.bash`

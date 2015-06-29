@@ -29,7 +29,9 @@ var api = function(){
 	var ssh = sshFactory(util, app);
 	var servers = util.setting(app, 'servers', is.array);
 
-	app.deploy = deploy.bind(null, util, app, servers);
+	app.deploy = deploy.bind(null, util, app, function(){
+		return normalize(servers());
+	});
 	app.deploy.local = deploy.local.bind(null, app);
 
 	app.stream = function(targetAlias){
