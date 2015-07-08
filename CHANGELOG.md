@@ -1,3 +1,7 @@
+# v1.4
+
+* `.custom` takes a string as file contents
+
 # v1.3
 
 * CLI for deploy
