@@ -9,7 +9,9 @@ module.exports = function(util, app){
 	var filesSetting = util.setting(app, 'custom');
 
 	var getData = function(input){
-		return Promise.denodeify(fs.readFile)(input);
+		if (input.substr(0, 1) === '/')
+			return Promise.denodeify(fs.readFile)(input);
+		return Promise.resolve(input);
 	};
 
 	return function(stream){

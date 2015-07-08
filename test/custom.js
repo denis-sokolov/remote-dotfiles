@@ -4,7 +4,7 @@ var test = require('tape');
 
 var dotfiles = require('..');
 
-test('custom', function(t) {
+test('custom by path', function(t) {
 	dotfiles()
 		.custom({
 			'.foo': __dirname + '/fixtures/bash/aliases.sh'
@@ -12,6 +12,18 @@ test('custom', function(t) {
 		.stream().on('data', function(file){
 			t.equal(file.relative, '.foo', 'has custom name');
 			t.ok(file.contents.toString().indexOf('baz=\'quux') > -1, 'has custom contents');
+			t.end();
+		});
+});
+
+test('custom by contents', function(t) {
+	dotfiles()
+		.custom({
+			'.foo': 'some-contents'
+		})
+		.stream().on('data', function(file){
+			t.equal(file.relative, '.foo', 'has custom name');
+			t.ok(file.contents.toString().indexOf('some-contents') > -1, 'has custom contents');
 			t.end();
 		});
 });

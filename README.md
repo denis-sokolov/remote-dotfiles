@@ -33,7 +33,8 @@ var config = dotfiles()
     .custom({
         // Deploy any custom files
         // Make sure a custom file has a string 'remote-dotfiles' in it to enable overwriting
-        '.gitignore': __dirname + '/gitconfig'
+        '.gitignore': __dirname + '/gitconfig',
+        '.welcome': 'Custom contents can be passed as a string'
     });
 ```
 
