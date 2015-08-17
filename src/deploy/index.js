@@ -4,6 +4,7 @@ var async = require('async');
 var cli = require('cli');
 var Promise = require('promise');
 var through2 = require('through2');
+var osHomedir = require('os-homedir');
 
 var clients = require('./clients');
 
@@ -94,7 +95,7 @@ var deploy = function(stream, client){
 
 var local = function(app, options){
 	options = deployOptions(options);
-	return deploy(app.stream(), options.clients.fs(process.env.HOME));
+	return deploy(app.stream(), options.clients.fs(osHomedir()));
 };
 
 /**
