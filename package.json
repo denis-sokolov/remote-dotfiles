@@ -38,8 +38,7 @@
     "test": "tape test/*.js | tap-colorize",
     "coverage": "istanbul cover tape test/*.js",
     "report-coverage": "istanbul cover --report lcovonly tape test/*.js && coveralls < coverage/lcov.info",
-    "watch-tests": "watch 'npm test'",
-    "prepublish": "npm run lint && npm test"
+    "watch-tests": "watch 'npm test'"
   },
   "author": "",
   "license": "ISC",
