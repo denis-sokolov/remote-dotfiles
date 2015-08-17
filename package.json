@@ -25,8 +25,8 @@
   },
   "devDependencies": {
     "coveralls": "^2.11.2",
-    "eslint": "^0.21.0",
-    "eslint-config-useclark": "^1.0.1",
+    "eslint": "^1.1.0",
+    "eslint-config-useclark": "^2.0.0",
     "istanbul": "^0.3.5",
     "jshint": "^2.6.0",
     "tap-colorize": "^1.2.0",

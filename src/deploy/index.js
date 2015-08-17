@@ -13,6 +13,8 @@ var clients = require('./clients');
  * Ignored statements in this function refer to the portions of the source code
  * that deal with such options combinations that do not allow for fake clients
  * to be injected.
+ * @param {object} options
+ * @return {object}
  */
 var deployOptions = function(options){
 	/* istanbul ignore if */
@@ -130,6 +132,13 @@ var local = function(app, options){
  *     ssh: function(serverAlias){ return { read, write }; }
  *   }
  * }
+ *
+ * @param {Object} util
+ * @param {Function} util.progress
+ * @param {App} app
+ * @param {Function} servers
+ * @param {Object} options
+ * @return {Promise}
  */
 module.exports = function(util, app, servers, options){
 	options = deployOptions(options);

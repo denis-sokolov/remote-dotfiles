@@ -6,7 +6,7 @@ var dotfiles = require('..');
 
 test('ssh', function (t) {
 	dotfiles()
-		.servers([{host:'example.com', port: 3133, alias: 'example', user: 'john'}])
+		.servers([{host: 'example.com', port: 3133, alias: 'example', user: 'john'}])
 		.stream().on('data', function(file){
 			t.equal(file.relative, '.ssh/config', 'has .ssh/config name');
 			t.ok(file.contents.toString().indexOf('Host example') > -1, 'has Host rule');
@@ -28,7 +28,7 @@ test('ssh', function (t) {
 
 test('ssh alphabetized', function (t) {
 	dotfiles()
-		.servers([{host:'b.example.com'}, {host:'a.example.com'}])
+		.servers([{host: 'b.example.com'}, {host: 'a.example.com'}])
 		.stream().on('data', function(file){
 			var contents = file.contents.toString();
 			t.ok(contents.indexOf('a.example.com') < contents.indexOf('b.example.com'));
@@ -38,7 +38,7 @@ test('ssh alphabetized', function (t) {
 
 test('ssh empty', function (t) {
 	dotfiles()
-		.servers([{host:'example.com'}])
+		.servers([{host: 'example.com'}])
 		.stream().on('data', function(file){
 			t.ok(file.contents.toString().indexOf('undefined') === -1, 'has no undefined');
 			t.end();
@@ -47,7 +47,7 @@ test('ssh empty', function (t) {
 
 test('ssh forwardAgent', function (t) {
 	dotfiles()
-		.servers([{host:'example.com', forwardAgent:true}])
+		.servers([{host: 'example.com', forwardAgent: true}])
 		.stream().on('data', function(file){
 			t.ok(file.contents.toString().indexOf('ForwardAgent') > -1, 'has ForwardAgent');
 			t.end();
@@ -70,7 +70,7 @@ test('ssh custom', function (t) {
 test('ssh proxy', function (t) {
 	t.plan(1);
 	dotfiles()
-		.servers([{host:'example.com'}, {host:'proxy.example.com'}])
+		.servers([{host: 'example.com'}, {host: 'proxy.example.com'}])
 		.proxies(function(from, to){
 			if (to.host === 'example.com')
 				return 'proxy.example.com';
@@ -83,7 +83,7 @@ test('ssh proxy', function (t) {
 test('ssh proxy does not set from.host', function (t) {
 	t.plan(1);
 	dotfiles()
-		.servers([{host:'example.com'}, {host:'proxy.example.com'}])
+		.servers([{host: 'example.com'}, {host: 'proxy.example.com'}])
 		.proxies(function(from){
 			if (from.host)
 				t.fail('should not set from.host');
@@ -96,7 +96,7 @@ test('ssh proxy does not set from.host', function (t) {
 test('ssh proxy sets from.host', function (t) {
 	t.plan(1);
 	dotfiles()
-		.servers([{host:'example.com'}, {host:'proxy.example.com'}])
+		.servers([{host: 'example.com'}, {host: 'proxy.example.com'}])
 		.proxies(function(from){
 			if (!from.host)
 				t.fail('should set from.host');
@@ -108,7 +108,7 @@ test('ssh proxy sets from.host', function (t) {
 
 test('ssh proxy remote self', function (t) {
 	dotfiles()
-		.servers([{host:'example.com'}, {host:'proxy.example.com'}])
+		.servers([{host: 'example.com'}, {host: 'proxy.example.com'}])
 		.proxies(function(from, to){
 			if (to.host === 'example.com')
 				return 'proxy.example.com';
@@ -124,7 +124,7 @@ test('ssh check settings types', function (t) {
 		dotfiles().proxies('foo');
 	});
 	t.throws(function(){
-		dotfiles().servers({host:'example.com'});
+		dotfiles().servers({host: 'example.com'});
 	});
 	t.throws(function(){
 		dotfiles().ssh(35);

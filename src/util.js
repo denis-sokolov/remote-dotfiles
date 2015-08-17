@@ -50,6 +50,8 @@ api.comment.stream = function(chr, txt){
 
 /**
  * A function to rename files in a stream, only considering the relative path
+ * @param {Function} f name -> new name
+ * @return {Function}
  */
 api.rename = function(f){
 	return through2.obj(function(chunk, enc, cb){
@@ -126,7 +128,7 @@ api.src = function(params, target){
 	var rest = params.slice(1);
 
 	var source = getSingleSource(first, target);
-	source.pipe(stream, {end:false});
+	source.pipe(stream, {end: false});
 	source.on('end', function(){
 		api.src(rest, target).pipe(stream);
 	});

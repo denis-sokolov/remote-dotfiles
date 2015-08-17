@@ -6,7 +6,7 @@ var dotfiles = require('..');
 
 test('remote', function (t) {
 	dotfiles()
-		.servers([{host:'example.com', port: 3133, alias: 'example'}])
+		.servers([{host: 'example.com', port: 3133, alias: 'example'}])
 		.stream('example').on('data', function(file){
 			t.equal(file.contents.toString().indexOf('Host example'), -1, 'has no self-Host rule');
 			t.end();
@@ -16,7 +16,7 @@ test('remote', function (t) {
 test('remote throws on wrong alias', function (t) {
 	t.throws(function(){
 		dotfiles()
-			.servers([{host:'example.com', port: 3133, alias: 'example'}])
+			.servers([{host: 'example.com', port: 3133, alias: 'example'}])
 			.stream('wrong');
 	});
 	t.end();

@@ -26,7 +26,7 @@ test('bash local', function(t) {
 
 test('bash remote', function(t){
 	dotfiles()
-		.servers([{host:'example.com'}])
+		.servers([{host: 'example.com'}])
 		.bash(__dirname + '/fixtures/bash/*')
 		.stream('example.com').on('data', function(file){
 			if (file.relative !== '.bashrc') return;
@@ -80,7 +80,7 @@ test('bash takes raw values along globs', function(t) {
 test('bash takes functions', function(t) {
 	t.plan(2);
 	var config = dotfiles()
-		.servers([{host:'example.com'}])
+		.servers([{host: 'example.com'}])
 		.bash(
 			function(server){
 				if (server.alias === 'example.com')

@@ -10,7 +10,7 @@ test('stream ends', function (t) {
 	var s = dotfiles()
 		.bash(__dirname + '/fixtures/bash/*.sh')
 		.ssh('foo')
-		.servers([{host:'example.com', port: 3133}])
+		.servers([{host: 'example.com', port: 3133}])
 		.stream();
 
 	var fileCount = 0;
