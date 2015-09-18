@@ -66,6 +66,9 @@ config.deploy({
 
     progress: function(){},
 
+    // The callback to be called on warnings about the configuration
+    warn: function(msg){},
+
     // Only deploy to one server
     target: 'host-alias'
 })
