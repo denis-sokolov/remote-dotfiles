@@ -10,7 +10,7 @@
   "dependencies": {
     "argparse": "^1.0.2",
     "async": "^1.2.0",
-    "cli": "^0.10.0",
+    "cli": "^0.11.0",
     "gulp-concat": "^2.4.3",
     "is": "^3.0.1",
     "map-stream": "0.1.0",
@@ -20,8 +20,8 @@
     "read-only-stream": "^2.0.0",
     "shell-quote": "^1.4.2",
     "through2": "^2.0.0",
-    "vinyl": "^0.5.0",
-    "vinyl-fs": "^1.0.0"
+    "vinyl": "^1.0.0",
+    "vinyl-fs": "^2.1.1"
   },
   "devDependencies": {
     "coveralls": "^2.11.2",
