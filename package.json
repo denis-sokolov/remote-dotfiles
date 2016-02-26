@@ -21,7 +21,7 @@
     "shell-quote": "^1.4.2",
     "through2": "^2.0.0",
     "vinyl": "^1.0.0",
-    "vinyl-fs": "^2.1.1"
+    "vinyl-fs": "^2.3.3"
   },
   "devDependencies": {
     "coveralls": "^2.11.2",
