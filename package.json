@@ -25,16 +25,14 @@
   },
   "devDependencies": {
     "coveralls": "^2.11.2",
-    "eslint": "^1.1.0",
-    "eslint-config-useclark": "^2.0.0",
+    "eslint": "^2.4.0",
     "istanbul": "^0.4.1",
-    "jshint": "^2.6.0",
     "tap-colorize": "^1.2.0",
     "tape": "^4.0.0",
     "watch": "^0.17.1"
   },
   "scripts": {
-    "lint": "jshint src test && eslint src test",
+    "lint": "eslint src test",
     "test": "tape test/*.js | tap-colorize",
     "coverage": "istanbul cover tape test/*.js",
     "report-coverage": "istanbul cover --report lcovonly tape test/*.js && coveralls < coverage/lcov.info",
