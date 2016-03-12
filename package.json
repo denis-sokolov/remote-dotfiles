@@ -4,9 +4,6 @@
   "description": "Deploy your dotfiles",
   "bin": "src/bin/index.js",
   "main": "src/index.js",
-  "directories": {
-    "test": "test"
-  },
   "dependencies": {
     "argparse": "^1.0.2",
     "async": "^1.2.0",
