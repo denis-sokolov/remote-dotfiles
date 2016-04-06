@@ -23,7 +23,7 @@
   "devDependencies": {
     "coveralls": "^2.11.2",
     "eslint": "^2.4.0",
-    "istanbul": "^0.4.1",
+    "istanbul": "^0.4.3",
     "tap-colorize": "^1.2.0",
     "tape": "^4.0.0",
     "watch": "^0.17.1"
