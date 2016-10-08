@@ -26,7 +26,7 @@
     "istanbul": "^0.4.1",
     "tap-colorize": "^1.2.0",
     "tape": "^4.0.0",
-    "watch": "^0.18.0"
+    "watch": "^0.19.1"
   },
   "scripts": {
     "lint": "eslint src test",
