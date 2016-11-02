@@ -1,3 +1,7 @@
+# v2
+
+* Drop support for Node 0.10 and 0.12.
+
 # v1.4
 
 * `.custom` takes a string as file contents
