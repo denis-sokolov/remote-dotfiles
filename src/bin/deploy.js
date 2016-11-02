@@ -20,7 +20,6 @@ module.exports = function(args){
 
 	f().then(null, function(err){
 		/* eslint-disable no-process-exit */
-		console.log(err);
-		process.exit(1);
+		setTimeout(() => { throw err; });
 	});
 };

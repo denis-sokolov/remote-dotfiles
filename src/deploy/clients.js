@@ -30,7 +30,7 @@ var run = function(args, opts){
 			if (code === 0) {
 				resolve(stdout);
 			} else {
-				var e = new Error(stderr);
+				var e = new Error(args.join(' ') + ' failed: ' + stderr);
 				e.code = code;
 				reject(e);
 			}
