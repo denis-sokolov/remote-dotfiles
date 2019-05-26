@@ -9,7 +9,7 @@
   },
   "dependencies": {
     "argparse": "^1.0.2",
-    "async": "^2.0.1",
+    "async": "^3.0.1",
     "cli": "^1.0.0",
     "gulp-concat": "^2.4.3",
     "is": "^3.0.1",
